@@ -71,6 +71,76 @@ If `CODEX_HOME` was used during installation, provide the same value when
 running the uninstall script. The script removes only symbolic links that
 point into the current Agent Kit checkout and leaves unrelated files intact.
 
+### Claude Code
+
+Agent Kit can be installed globally for Claude Code. The installation makes
+the shared working agreements and all included skills available in every
+project.
+
+The installer creates symbolic links:
+
+- `${CLAUDE_CONFIG_DIR:-~/.claude}/CLAUDE.md` points to
+  `instructions/working-agreements.md`;
+- each directory under `skills/` is linked into
+  `${CLAUDE_CONFIG_DIR:-~/.claude}/skills/`.
+
+Because symbolic links are used, keep the cloned repository in its original
+location after installation. Updates pulled into the repository become
+available to Claude Code automatically.
+
+#### Install with the script
+
+Requirements:
+
+- Git;
+- Bash;
+- Claude Code.
+
+```bash
+git clone https://github.com/bohdanmoroziuk/agent-kit.git agent-kit
+cd agent-kit
+./scripts/claude/install.sh
+```
+
+The installer is idempotent and does not overwrite existing files or symbolic
+links. If a destination is already occupied by another installation, the
+script stops and reports the conflict.
+
+Set `CLAUDE_CONFIG_DIR` before running the installer to use a custom Claude
+Code configuration directory.
+
+Start a new Claude Code session after installation so that the global
+instructions and skills are discovered.
+
+#### Install manually
+
+Run these commands from the Agent Kit repository:
+
+```bash
+set -e
+claude_config_dir="${CLAUDE_CONFIG_DIR:-"$HOME/.claude"}"
+mkdir -p "$claude_config_dir/skills"
+ln -s "$PWD/instructions/working-agreements.md" "$claude_config_dir/CLAUDE.md"
+for skill in "$PWD"/skills/*; do
+  [ -d "$skill" ] || continue
+  ln -s "$skill" "$claude_config_dir/skills/$(basename "$skill")"
+done
+```
+
+#### Uninstall
+
+Run the uninstall script from the same repository location used during
+installation:
+
+```bash
+./scripts/claude/uninstall.sh
+```
+
+If `CLAUDE_CONFIG_DIR` was used during installation, provide the same value
+when running the uninstall script. The script removes only symbolic links
+that point into the current Agent Kit checkout and leaves unrelated files
+intact.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
