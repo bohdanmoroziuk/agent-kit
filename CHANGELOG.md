@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Add global Claude Code installation and uninstallation scripts with setup documentation.
 - Add global Codex installation and uninstallation scripts with setup documentation.
 - Add a read-only skill for reviewing code changes for concrete defects, regressions, complexity, and repository convention violations.
 - Add a skill for creating colocated TypeScript E2E tests by target or scope.
