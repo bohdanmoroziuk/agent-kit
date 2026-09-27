@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Add a skill for creating colocated TypeScript E2E tests by target or scope.
 - Add a skill for running and reporting project verification checks.
 - Add a skill for documenting Nuxt 4 server routes with OpenAPI route metadata.
 - Add a skill for creating documented, unit-tested TypeScript utility functions.
